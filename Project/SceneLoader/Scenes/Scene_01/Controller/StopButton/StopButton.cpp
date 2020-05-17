@@ -76,10 +76,10 @@ void StopButton::active(void) {
 void StopButton::set(void) {
     if (Status::status == Status::DeepStatus::Process || Status::status == Status::DeepStatus::Pause) {
         Status::status = Status::DeepStatus::Empty;
-        Logger::LogMessage(std::string("Press STOP button when possible"));
-        Logger::LogMessage(std::string("Stop the algorithm"));
+        Logger::LogMessage("Press STOP button when possible"s);
+        Logger::LogMessage("Stop the algorithm"s);
     } else {
-        Logger::LogMessage(std::string("Try to press STOP button when impossible"));
+        Logger::LogMessage("Try to press STOP button when impossible"s);
     }
     m_Locale = Locale::Up;
 }

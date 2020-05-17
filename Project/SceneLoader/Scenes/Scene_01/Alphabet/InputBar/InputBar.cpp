@@ -20,7 +20,7 @@ void InputBar::draw(void) {
                   y1*Status::resizeVertical,
                   x2*Status::resizeHorizontal - 1,
                   y2*Status::resizeVertical - 1,
-                  255, 255, 255, 200
+                  0xff, 0xff, 0xff, 0xc8
     );
     switch (m_Locale) {
         case Locale::Disable:
@@ -29,7 +29,7 @@ void InputBar::draw(void) {
                           y1*Status::resizeVertical,
                           x2*Status::resizeHorizontal,
                           y2*Status::resizeVertical,
-                          0, 0, 0, 255
+                          0x00, 0x00, 0x00, 0xff
                           );
             break;
         case Locale::Touch:
@@ -38,14 +38,14 @@ void InputBar::draw(void) {
                           y1*Status::resizeVertical,
                           x2*Status::resizeHorizontal,
                           y2*Status::resizeVertical,
-                          0, 0, 0, 255
+                          0x00, 0x00, 0x00, 0xff
                           );
             rectangleRGBA(m_Renderer,
                           x1*Status::resizeHorizontal + 2,
                           y1*Status::resizeVertical + 2,
                           x2*Status::resizeHorizontal - 2,
                           y2*Status::resizeVertical - 2,
-                          0, 0, 0, 255
+                          0x00, 0x00, 0x00, 0xff
                           );
             break;
         case Locale::Enable:
@@ -54,14 +54,14 @@ void InputBar::draw(void) {
                           y1*Status::resizeVertical,
                           x2*Status::resizeHorizontal,
                           y2*Status::resizeVertical,
-                          0, 0, 0, 255
+                          0x00, 0x00, 0x00, 0xff
                           );
             rectangleRGBA(m_Renderer,
                           x1*Status::resizeHorizontal + 1,
                           y1*Status::resizeVertical + 1,
                           x2*Status::resizeHorizontal - 1,
                           y2*Status::resizeVertical - 1,
-                          0, 0, 0, 255
+                          0x00, 0x00, 0x00, 0xff
                           );
             break;
     }
@@ -80,15 +80,15 @@ void InputBar::set(void) {
         Status::status = Status::DeepStatus::InputBar;
         m_Locale = Locale::Enable;
         SDL_StartTextInput();
-        Logger::LogMessage(std::string("Enable INPUT BAR when possible"));
+        Logger::LogMessage("Enable INPUT BAR when possible"s);
     } else {
-        Logger::LogMessage(std::string("Try to enable INPUT BAR when impossible"));
+        Logger::LogMessage("Try to enable INPUT BAR when impossible"s);
     }
 }
 
 void InputBar::disable(void) {
     if (Status::status == Status::DeepStatus::InputBar)
-        Logger::LogMessage(std::string("Disable INPUT BAR"));
+        Logger::LogMessage("Disable INPUT BAR"s);
     m_Locale = Locale::Disable;
     Status::status = Status::DeepStatus::Empty;
     SDL_StopTextInput();
@@ -107,13 +107,13 @@ void InputBar::handle(SDL_Event *l_Event) {
                     if (i == Status::alphabet[Status::alphabet.size() - 1])
                         i = Status::alphabet[0];
                 
-                Logger::LogMessage(std::string("Delete \"") + Status::alphabet[Status::alphabet.size() - 1] + "\" from INPUT BAR when possible. Bar was \"" + Status::alphabet + "\"");
+                Logger::LogMessage("Delete \""s + Status::alphabet[Status::alphabet.size() - 1] + "\" from INPUT BAR when possible. Bar was \"" + Status::alphabet + "\"");
                 
                 Status::alphabet = Status::alphabet.substr(0, Status::alphabet.size() - 1);
                 for (int i = 0; i < Status::algorithm.size(); i++)
                     Status::algorithm[i].erase(Status::algorithm[i].end() - 1);
             } else {
-                Logger::LogMessage(std::string("Try to delete from INPUT BAR when impossible. Bar is \"" + Status::alphabet + "\""));
+                Logger::LogMessage("Try to delete from INPUT BAR when impossible. Bar is \""s + Status::alphabet + "\"");
             }
             value.data->SetContent(Status::alphabet, m_Renderer);
         }
@@ -129,14 +129,14 @@ void InputBar::handle(SDL_Event *l_Event) {
                 for (int i = 0; i < Status::algorithm.size(); i++)
                     Status::algorithm[i].push_back("");
                 value.data->SetContent(Status::alphabet, m_Renderer);
-                Logger::LogMessage(std::string("Add \"") + l_Event->text.text[0] + "\" to INPUT BAR when possible. Bar is \"" + Status::alphabet + "\"");
+                Logger::LogMessage("Add \""s + l_Event->text.text[0] + "\" to INPUT BAR when possible. Bar is \"" + Status::alphabet + "\"");
             }  else if (l_Event->text.text[0] == '_') {
-                Logger::LogMessage(std::string("Try to add \"_\" to INPUT BAR when possible. Bar is \"" + Status::alphabet + "\""));
+                Logger::LogMessage("Try to add \"_\" to INPUT BAR when possible. Bar is \""s + Status::alphabet + "\"");
             } else {
-                Logger::LogMessage(std::string("Try to add repeat symbol \"") + l_Event->text.text[0] + "\" to INPUT BAR when possible. Bar is \"" + Status::alphabet + "\"");
+                Logger::LogMessage("Try to add repeat symbol \""s + l_Event->text.text[0] + "\" to INPUT BAR when possible. Bar is \"" + Status::alphabet + "\"");
             }
         } else {
-            Logger::LogMessage(std::string("Try to add to INPUT BAR when impossible. Bar is \"" + Status::alphabet + "\""));
+            Logger::LogMessage("Try to add to INPUT BAR when impossible. Bar is \""s + Status::alphabet + "\"");
         }
     }
     

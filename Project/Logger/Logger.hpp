@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std::string_literals;
+
 class Logger {
 public:
     enum Status { NONE, MESSAGE, ERROR, WARNING, SUCSESS, PROCESS, ALL };

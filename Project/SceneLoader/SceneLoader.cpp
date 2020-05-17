@@ -10,7 +10,7 @@ SceneLoader::SceneLoader(WindowEntity* l_Window, SDL_Renderer* l_Renderer) {
     m_Window = l_Window;
     m_Renderer = l_Renderer;
     m_ActiveScene = Scenes::EMPTY;
-    Logger::LogProcess(std::string("Creating the scenes"));
+    Logger::LogProcess("Creating the scenes"s);
 
     // Init static status
     for (int i = 0; i < Status::amountOfCells; i++)
@@ -30,17 +30,17 @@ SceneLoader::SceneLoader(WindowEntity* l_Window, SDL_Renderer* l_Renderer) {
             std::string error;
             tmp_ss >> error;
             status = false;
-            Logger::LogError(std::string("Could not create scene[") + error + "]");
+            Logger::LogError("Could not create scene["s + error + "]");
             exit(3);
         }
-    if (status) Logger::LogSucsess(std::string("All scenes are created"));
+    if (status) Logger::LogSucsess("All scenes are created"s);
 }
 
 SceneLoader::~SceneLoader(void) {
-    Logger::LogProcess(std::string("Deleting all scenes"));
+    Logger::LogProcess("Deleting all scenes"s);
     for (int i = 0; i < AMOUNT_OF_SCENES; i++)
         delete m_Scenes[i];
-    Logger::LogSucsess(std::string("All scenes deleted"));
+    Logger::LogSucsess("All scenes deleted"s);
 }
 
 void SceneLoader::SetScene(Scenes l_Scene) {
@@ -49,9 +49,9 @@ void SceneLoader::SetScene(Scenes l_Scene) {
             ClearScene();
         m_ActiveScene = l_Scene;
         m_Scenes[(int) l_Scene]->Init(m_Window, m_Renderer);
-        Logger::LogSucsess(std::string("The scene loaded"));
+        Logger::LogSucsess("The scene loaded"s);
     } else {
-        Logger::LogError(std::string("Could not load the scene"));
+        Logger::LogError("Could not load the scene"s);
         exit(5);
     }
 }

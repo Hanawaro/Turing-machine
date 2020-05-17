@@ -87,13 +87,13 @@ void LeftButton::set(void) {
         if (Status::bias - 1 < 0) {
             Status::tape.insert(Status::tape.begin(), ' ');
             Status::bias = 0;
-            Logger::LogMessage(std::string("Press LEFT button when possible with allocate"));
+            Logger::LogMessage("Press LEFT button when possible with allocate"s);
         } else {
             Status::bias = Status::bias - 1;
-            Logger::LogMessage(std::string("Press LEFT button when possible without allocate"));
+            Logger::LogMessage("Press LEFT button when possible without allocate"s);
         }
     } else {
-        Logger::LogMessage(std::string("Try to press LEFT button when impossible"));
+        Logger::LogMessage("Try to press LEFT button when impossible"s);
     }
     m_Locale = Locale::Touch;
 }

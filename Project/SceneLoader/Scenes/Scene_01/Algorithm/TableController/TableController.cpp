@@ -66,14 +66,14 @@ void TableController::draw(void) {
                   y * Status::resizeVertical,
                   (x + (Status::algorithm.size() + 1) * width) * Status::resizeHorizontal,
                   (y + (Status::alphabet.size() + 1) * height) * Status::resizeVertical,
-                  255, 255, 255, 200
+                  0xff, 0xff, 0xff, 0xc8
                   );
     rectangleRGBA(m_Renderer,
                   x * Status::resizeHorizontal,
                   y * Status::resizeVertical,
                   (x + (Status::algorithm.size() + 1) * width) * Status::resizeHorizontal + 1,
                   (y + (Status::alphabet.size() + 1) * height) * Status::resizeVertical + 1,
-                  0, 0, 0, 255
+                  0x00, 0x00, 0x00, 0xff
                   );
     for (int i = 0; i <= Status::alphabet.size(); i++) {
         lineRGBA(m_Renderer,
@@ -81,7 +81,8 @@ void TableController::draw(void) {
                  (y + i*height)*Status::resizeVertical,
                  (x + (Status::algorithm.size() + 1) * width) * Status::resizeHorizontal,
                  (y + i*height)*Status::resizeVertical,
-                 0, 0, 0, 255);
+                 0x00, 0x00, 0x00, 0xff
+                 );
     }
     for (int i = 0; i <= Status::algorithm.size(); i++) {
         lineRGBA(m_Renderer,
@@ -89,7 +90,8 @@ void TableController::draw(void) {
                  y*Status::resizeVertical,
                  (x + i*width) * Status::resizeHorizontal,
                  (y + (Status::alphabet.size() + 1) * height) * Status::resizeVertical,
-                 0, 0, 0, 255);
+                 0x00, 0x00, 0x00, 0xff
+                 );
     }
     if (m_LocaleMain == Locale::Touch || m_LocaleSecondary == Locale::Touch)
         rectangleRGBA(m_Renderer,
@@ -97,7 +99,7 @@ void TableController::draw(void) {
                       m_ActiveCell.y1*Status::resizeVertical + 2,
                       m_ActiveCell.x2*Status::resizeHorizontal - 1,
                       m_ActiveCell.y2*Status::resizeVertical - 1,
-                      0, 0, 0, 255
+                      0x00, 0x00, 0x00, 0xff
                       );
     if (m_LocaleMain == Locale::Enable)
         rectangleRGBA(m_Renderer,
@@ -105,7 +107,7 @@ void TableController::draw(void) {
                       m_DrawCell.y1*Status::resizeVertical + 1,
                       m_DrawCell.x2*Status::resizeHorizontal,
                       m_DrawCell.y2*Status::resizeVertical,
-                      0, 0, 0, 255
+                      0x00, 0x00, 0x00, 0xff
                       );
     
     for (int i = 0; i < Status::algorithm.size(); i++) {
@@ -191,9 +193,9 @@ void TableController::set(void) {
         m_DrawCell.x2 = m_ActiveCell.x2;
         m_DrawCell.y2 = m_ActiveCell.y2;
         SDL_StartTextInput();
-        Logger::LogMessage(std::string("Enable TABLE CELL [") + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "] when possible. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+        Logger::LogMessage("Enable TABLE CELL ["s + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "] when possible. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
     } else {
-        Logger::LogMessage(std::string("Try to enable TABLE CELL [") + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "] when impossible. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+        Logger::LogMessage("Try to enable TABLE CELL ["s + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "] when impossible. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
     }
 }
 
@@ -207,7 +209,7 @@ void TableController::disable(void) {
         }
     }
     if (Status::status == Status::DeepStatus::Cells) {
-        Logger::LogMessage(std::string("Disable TABLE CELL [") + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+        Logger::LogMessage("Disable TABLE CELL ["s + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
     }
     
     if (Status::status != Status::DeepStatus::Empty) {
@@ -294,7 +296,7 @@ void TableController::handle(SDL_Event *l_Event) {
     if (l_Event->type == SDL_KEYDOWN) {
         if (l_Event->key.keysym.sym == SDLK_BACKSPACE) {
             if (Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].size() > 0) {
-                Logger::LogMessage(std::string("Delete  \"") + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ][Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].size() - 1] + "\" from TABLE CELL [" + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "] when possible. Cell was \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                Logger::LogMessage("Delete  \""s + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ][Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].size() - 1] + "\" from TABLE CELL [" + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "] when possible. Cell was \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
                 
                     Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] = Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].substr(0, Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].size() - 1);
                 std::string add = "";
@@ -308,7 +310,7 @@ void TableController::handle(SDL_Event *l_Event) {
                 if(Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].size() == 0)
                     checkOld();
             } else {
-                Logger::LogMessage(std::string("Try to delete from TABLE CELL [") + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "] when impossible. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                Logger::LogMessage("Try to delete from TABLE CELL ["s + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) + "] when impossible. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
             }
         }
     } else if (l_Event->type == SDL_TEXTINPUT) {
@@ -329,9 +331,9 @@ void TableController::handle(SDL_Event *l_Event) {
                         m_Algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].data->SetContent(Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "  ", m_Renderer);
                     }
                     
-                    Logger::LogMessage(std::string("Add alphabet symbol \"") + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                    Logger::LogMessage("Add alphabet symbol \""s + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
                 } else {
-                    Logger::LogMessage(std::string("Try to add NOT alphabet symbol \"") + l_Event->text.text[0] + "\" to TABLE CELL [" + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                    Logger::LogMessage("Try to add NOT alphabet symbol \""s + l_Event->text.text[0] + "\" to TABLE CELL [" + std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
                 }
                 break;
             case 1:
@@ -342,9 +344,9 @@ void TableController::handle(SDL_Event *l_Event) {
                     } else {
                         m_Algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].data->SetContent(Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + " ", m_Renderer);
                     }
-                    Logger::LogMessage(std::string("Add carriage command \"") + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                    Logger::LogMessage("Add carriage command \""s + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
                 } else {
-                    Logger::LogMessage(std::string("Try to add NOT carriage command \"") + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                    Logger::LogMessage("Try to add NOT carriage command \""s + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
                 }
                 break;
             case 2:
@@ -355,13 +357,13 @@ void TableController::handle(SDL_Event *l_Event) {
                     } else {
                         m_Algorithm[m_DrawCell.activeI][m_DrawCell.activeJ].data->SetContent(Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ], m_Renderer);
                     }
-                    Logger::LogMessage(std::string("Add condition \"") + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                    Logger::LogMessage("Add condition \""s + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
                 } else {
-                    Logger::LogMessage(std::string("Try add NOT condition \"") + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                    Logger::LogMessage("Try add NOT condition \""s + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
                 }
                 break;
             default:
-                Logger::LogMessage(std::string("Try add more symbol \"") + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
+                Logger::LogMessage("Try add more symbol \""s + l_Event->text.text[0] + "\" to TABLE CELL ["+ std::to_string(m_DrawCell.activeI) + "][" + std::to_string(m_DrawCell.activeJ) +"]. Cell is \"" + Status::algorithm[m_DrawCell.activeI][m_DrawCell.activeJ] + "\"");
                 break;
         }
     }

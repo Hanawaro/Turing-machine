@@ -77,15 +77,15 @@ void NextButton::active(void) {
 void NextButton::set(void) {
     if (Status::status != Status::DeepStatus::Process && Status::status != Status::DeepStatus::Pause && Status::status != Status::DeepStatus::End) {
         
-        Logger::LogMessage(std::string("Press NEXT button when possible"));
+        Logger::LogMessage("Press NEXT button when possible"s);
         if (Status::status != Status::DeepStatus::NextStep)
-            Logger::LogMessage(std::string("Next step of the algorithm"));
+            Logger::LogMessage("Next step of the algorithm"s);
         else
-            Logger::LogMessage(std::string("Reset step of the algorithm"));
+            Logger::LogMessage("Reset step of the algorithm"s);
         
         Status::status = Status::DeepStatus::NextStep;
     } else {
-        Logger::LogMessage(std::string("Try to press NEXT button when impossible"));
+        Logger::LogMessage("Try to press NEXT button when impossible"s);
     }
     m_Locale = Locale::Touch;
 }

@@ -71,14 +71,14 @@ void StartButton::active(void) {
 
 void StartButton::set(void) {
     if (Status::status != Status::DeepStatus::Process) {
-        Logger::LogMessage(std::string("Press START button when possible"));
+        Logger::LogMessage("Press START button when possible"s);
         if (Status::status == Status::DeepStatus::Pause)
-            Logger::LogMessage(std::string("Continue the algorithm"));
+            Logger::LogMessage("Continue the algorithm"s);
         else
-            Logger::LogMessage(std::string("Start the algorithm"));
+            Logger::LogMessage("Start the algorithm"s);
         Status::status = Status::DeepStatus::Process;
     } else {
-        Logger::LogMessage(std::string("Try to press START button when impossible"));
+        Logger::LogMessage("Try to press START button when impossible"s);
     }
     m_Locale = Locale::Up;
     

@@ -87,12 +87,12 @@ void RightButton::set(void) {
         Status::bias++;
         if (Status::bias + 15 > Status::tape.size()) {
             Status::tape.push_back(' ');
-            Logger::LogMessage(std::string("Press RIGHT button when possible with allocate"));
+            Logger::LogMessage("Press RIGHT button when possible with allocate"s);
         } else {
-            Logger::LogMessage(std::string("Press RIGHT button when possible without allocate"));
+            Logger::LogMessage("Press RIGHT button when possible without allocate"s);
         }
     } else {
-        Logger::LogMessage(std::string("Try to press RIGHT button when impossible"));
+        Logger::LogMessage("Try to press RIGHT button when impossible"s);
     }
     m_Locale = Locale::Touch;
 }

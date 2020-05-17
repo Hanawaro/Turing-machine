@@ -73,10 +73,10 @@ void PauseButton::active(void) {
 void PauseButton::set(void) {
     if (Status::status == Status::DeepStatus::Process) {
         Status::status = Status::DeepStatus::Pause;
-        Logger::LogMessage(std::string("Press PAUSE button when possible"));
-        Logger::LogMessage(std::string("Pause the algorithm"));
+        Logger::LogMessage("Press PAUSE button when possible"s);
+        Logger::LogMessage("Pause the algorithm"s);
     } else {
-        Logger::LogMessage(std::string("Try to press PAUSE button when impossible"));
+        Logger::LogMessage("Try to press PAUSE button when impossible"s);
     }
     m_Locale = Locale::Up;
 }

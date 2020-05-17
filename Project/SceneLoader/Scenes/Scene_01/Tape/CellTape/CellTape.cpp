@@ -45,7 +45,7 @@ void CellTape::draw(void) {
                              (top - 20)*Status::resizeVertical,
                              (left + right + 80*i)/2*Status::resizeHorizontal,
                              (top - 1)*Status::resizeVertical,
-                             0, 0, 0, 255
+                             0x00, 0x00, 0x00, 0xff
                              );
         }
         boxRGBA(m_Renderer,
@@ -53,14 +53,14 @@ void CellTape::draw(void) {
                       top*Status::resizeVertical,
                       (right + 40*i)*Status::resizeHorizontal,
                       bottom*Status::resizeVertical - 1,
-                      255, 255, 255, 100
+                      0xff, 0xff, 0xff, 0x64
                       );
         rectangleRGBA(m_Renderer,
                       (left + 40*i)*Status::resizeHorizontal,
                       top*Status::resizeVertical,
                       (right + 40*i)*Status::resizeHorizontal + 1,
                       bottom*Status::resizeVertical,
-                      0, 0, 0, 255
+                      0x00, 0x00, 0x00, 0xff
                       );
         m_Tape[i].data->SetSize(m_Tape[i].width*Status::resizeHorizontal, m_Tape[i].height*Status::resizeVertical);
         m_Tape[i].data->SetPosition((left + 40*i + (width - m_Tape[i].width)/2)*Status::resizeHorizontal, (top+4)*Status::resizeVertical);
@@ -100,9 +100,9 @@ void CellTape::OpenCell(int x, int y) {
             indexTape = i;
             
             if (Status::status != Status::DeepStatus::Pause && Status::status != Status::DeepStatus::Process)
-                Logger::LogMessage(std::string("Press CELL BAR when possible"));
+                Logger::LogMessage("Press CELL BAR when possible"s);
             else
-                Logger::LogMessage(std::string("Press CELL BAR when impossible"));
+                Logger::LogMessage("Press CELL BAR when impossible"s);
             break;
         }
     }
@@ -120,14 +120,14 @@ void CellTape::drawSideBar(void) {
                         Status::sideBar.y1*Status::resizeVertical,
                         Status::sideBar.x2*Status::resizeHorizontal - 1,
                         Status::sideBar.y2*Status::resizeVertical - 1,
-                        255, 255, 255, 240
+                        0xff, 0xff, 0xff, 0xf0
                         );
                 rectangleRGBA(m_Renderer,
                         Status::sideBar.x1*Status::resizeHorizontal,
                         Status::sideBar.y1*Status::resizeVertical,
                         Status::sideBar.x2*Status::resizeHorizontal,
                         Status::sideBar.y2*Status::resizeVertical,
-                        0, 0, 0, 255
+                        0x00, 0x00, 0x00, 0xff
                 );
                 for (int i = 0; i < Status::alphabet.size(); i++) {
                     m_Alphabet[i].data->SetSize(m_Alphabet[i].width*Status::resizeHorizontal, m_Alphabet[i].height*Status::resizeVertical);
@@ -142,7 +142,7 @@ void CellTape::drawSideBar(void) {
                         Status::sideBar.y1*Status::resizeVertical,
                         Status::sideBar.x2*Status::resizeHorizontal - 1,
                         Status::sideBar.y2*Status::resizeVertical - 1,
-                        255, 255, 255, 240
+                        0xff, 0xff, 0xff, 0xf0
                 );
                 for (int i = 0; i < index; i++) {
                     y1 += 20;
@@ -153,14 +153,14 @@ void CellTape::drawSideBar(void) {
                         y1*Status::resizeVertical,
                         Status::sideBar.x2*Status::resizeHorizontal - 1,
                         y2*Status::resizeVertical,
-                        200, 200, 200, 240
+                        0xc8, 0xc8, 0xc8, 0xf0
                 );
                 rectangleRGBA(m_Renderer,
                         Status::sideBar.x1*Status::resizeHorizontal,
                         Status::sideBar.y1*Status::resizeVertical,
                         Status::sideBar.x2*Status::resizeHorizontal,
                         Status::sideBar.y2*Status::resizeVertical,
-                        0, 0, 0, 255
+                        0x00, 0x00, 0x00, 0xff
                 );
                 y1 = Status::sideBar.y1;
                 for (int i = 0; i < Status::alphabet.size(); i++) {
@@ -201,7 +201,7 @@ void CellTape::DoSideBar(int x, int y) {
     m_Tape[indexTape].data->SetContent(data, m_Renderer);
     
     Status::status = Status::DeepStatus::Empty;
-    Logger::LogMessage(std::string("Put on tape's cell[") + std::to_string(indexTape) + "] \"" + data + "\" ");
+    Logger::LogMessage("Put on tape's cell["s + std::to_string(indexTape) + "] \"" + data + "\" ");
     disable();
 }
 
@@ -212,7 +212,7 @@ void CellTape::clear(void) {
 
 void CellTape::disable(void) {
     if (locale != Locale::Disable)
-        Logger::LogMessage(std::string("Disable CELL BAR"));
+        Logger::LogMessage("Disable CELL BAR"s);
     locale = Locale::Disable;
     Status::sideBar = { 0, 0, 0, 0, 0 };
         

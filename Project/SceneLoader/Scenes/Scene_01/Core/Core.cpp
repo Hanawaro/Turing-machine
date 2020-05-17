@@ -43,6 +43,7 @@ void Core::touch(int x, int y) {
     // the side bar of the tape module
     if (x > Status::sideBar.x1 && x < Status::sideBar.x2 && y > Status::sideBar.y1 && y < Status::sideBar.y2) {
         m_CellTape.ActiveSideBar(x, y);
+        return;
     }
     
     // THE CONTROLLER MODULE
@@ -329,7 +330,7 @@ void Core::doProcess(double l_Time) {
             if (m_Info[2] == '0') {
                 m_Step = 1;
                 Status::status = Status::DeepStatus::Empty;
-                Logger::LogMessage(std::string("Legal end of a algorithm"));
+                Logger::LogMessage("Legal end of a algorithm"s);
             } else {
                 m_Step = m_Info[2] - '0';
             }
@@ -344,14 +345,14 @@ void Core::doProcess(double l_Time) {
                 if (Status::alphabet.find(m_ForIndex) == -1) {
                     m_Step = 1;
                     Status::status = Status::DeepStatus::Empty;
-                    Logger::LogMessage(std::string("Fatal end of a algorithm"));
+                    Logger::LogMessage("Fatal end of a algorithm"s);
                     return;
                 }
                 m_Info = Status::algorithm[m_Step - 1][Status::alphabet.find(m_ForIndex)];
                 if (m_Info.size() != 3) {
                     m_Step = 1;
                     Status::status = Status::DeepStatus::Empty;
-                    Logger::LogMessage(std::string("Fatal end of a algorithm"));
+                    Logger::LogMessage("Fatal end of a algorithm"s);
                     return;
                 }
                 // Cell valuse replacement
@@ -380,7 +381,7 @@ void Core::doNext(void) {
         if (m_Info.size() != 3) {
             m_Step = 1;
             Status::status = Status::DeepStatus::End;
-            Logger::LogMessage(std::string("Fatal end of a next step algorithm"));
+            Logger::LogMessage("Fatal end of a next step algorithm"s);
         } else {
             // Cell valuse replacement
             Status::tape[m_Index] = m_Info[0];
@@ -404,7 +405,7 @@ void Core::doNext(void) {
                 if (m_Info[2] == '0') {
                     m_Step = 1;
                     Status::status = Status::DeepStatus::End;
-                    Logger::LogMessage(std::string("Legal end of a next step algorithm"));
+                    Logger::LogMessage("Legal end of a next step algorithm"s);
                 } else {
                     m_Step = m_Info[2] - '0';
                 }

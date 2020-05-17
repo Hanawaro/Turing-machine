@@ -47,130 +47,130 @@ void Application::init(const char* l_Title, Uint16 l_Width, Uint16 l_Height, Uin
     // Logger init
     Logger::Init(Logger::MESSAGE);
     
-    Logger::LogProcess(std::string("Creating the application class"));
+    Logger::LogProcess("Creating the application class"s);
     // Init SDL
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        Logger::LogError(std::string("SDL could not initialize! SDL_Error: ") + SDL_GetError());
+        Logger::LogError("SDL could not initialize! SDL_Error: "s + SDL_GetError());
         Logger::Destroy();
         return;
     }
-    Logger::LogSucsess(std::string("SDL initialized"));
+    Logger::LogSucsess("SDL initialized"s);
     
     // Init IMG
     int tmp_imgFlags = IMG_INIT_PNG;
     if (!(IMG_Init(tmp_imgFlags) & tmp_imgFlags)) {
-        Logger::LogError(std::string("SDL_image could not initialuze! SDL_image: ") + IMG_GetError());
+        Logger::LogError("SDL_image could not initialuze! SDL_image: "s + IMG_GetError());
         SDL_Quit();
-        Logger::LogWarning(std::string("SDL quited"));
-        Logger::LogWarning(std::string("Memory cleared"));
+        Logger::LogWarning("SDL quited"s);
+        Logger::LogWarning("Memory cleared"s);
         Logger::Destroy();
         return;
     }
-    Logger::LogSucsess(std::string("IMG initialized"));
+    Logger::LogSucsess("IMG initialized"s);
     
     // Init TTF
     if (TTF_Init() < 0) {
-        Logger::LogError(std::string("TTF could not initialize! TTF_Error: ") + TTF_GetError());
+        Logger::LogError("TTF could not initialize! TTF_Error: "s + TTF_GetError());
         IMG_Quit();
-        Logger::LogWarning(std::string("IMG quited"));
+        Logger::LogWarning("IMG quited"s);
         SDL_Quit();
-        Logger::LogWarning(std::string("SDL quited"));
-        Logger::LogWarning(std::string("Memory cleared"));
+        Logger::LogWarning("SDL quited"s);
+        Logger::LogWarning("Memory cleared"s);
         Logger::Destroy();
         return;
     }
-    Logger::LogSucsess(std::string("TTF initialized"));
+    Logger::LogSucsess("TTF initialized"s);
     
     // MIX
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ) {
-        Logger::LogError(std::string("Window could not be created! SDL_Error: ") + Mix_GetError());
+        Logger::LogError("Window could not be created! SDL_Error: "s + Mix_GetError());
         TTF_Quit();
-        Logger::LogWarning(std::string("TTF quited"));
+        Logger::LogWarning("TTF quited"s);
         IMG_Quit();
-        Logger::LogWarning(std::string("IMG quited"));
+        Logger::LogWarning("IMG quited"s);
         SDL_Quit();
-        Logger::LogWarning(std::string("SDL quited"));
-        Logger::LogWarning(std::string("Memory cleared"));
+        Logger::LogWarning("SDL quited"s);
+        Logger::LogWarning("Memory cleared"s);
         Logger::Destroy();
         return;
     }
-    Logger::LogSucsess(std::string("MIX initialized"));
+    Logger::LogSucsess("MIX initialized"s);
     
     // Initialize window
     m_Window = new WindowEntity();
     m_Window->width = l_Width;
     m_Window->height = l_Height;
     if (!(m_Window->window = SDL_CreateWindow(l_Title, l_PosX, l_PosY, l_Width, l_Height, l_Flag))) {
-        Logger::LogError(std::string("Window could not be created! SDL_Error: ") + SDL_GetError());
+        Logger::LogError("Window could not be created! SDL_Error: "s + SDL_GetError());
         delete m_Window;
-        Logger::LogWarning(std::string("Window deleted"));
+        Logger::LogWarning("Window deleted"s);
         TTF_Quit();
-        Logger::LogWarning(std::string("TTF quited"));
+        Logger::LogWarning("TTF quited"s);
         IMG_Quit();
-        Logger::LogWarning(std::string("IMG quited"));
+        Logger::LogWarning("IMG quited"s);
         SDL_Quit();
-        Logger::LogWarning(std::string("SDL quited"));
-        Logger::LogWarning(std::string("Memory cleared"));
+        Logger::LogWarning("SDL quited"s);
+        Logger::LogWarning("Memory cleared"s);
         Logger::Destroy();
         return;
     }
-    Logger::LogSucsess(std::string("Window initialized"));
+    Logger::LogSucsess("Window initialized"s);
     
     // Initialize renderer
     if (!(m_Renderer = SDL_CreateRenderer(m_Window->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC))) {
-        Logger::LogError(std::string("Renderer could not be created! SDL_Error: ") + SDL_GetError());
+        Logger::LogError("Renderer could not be created! SDL_Error: "s + SDL_GetError());
         SDL_DestroyWindow(m_Window->window);
         delete m_Window;
-        Logger::LogWarning(std::string("Window deleted"));
+        Logger::LogWarning("Window deleted"s);
         TTF_Quit();
-        Logger::LogWarning(std::string("TTF quited"));
+        Logger::LogWarning("TTF quited"s);
         IMG_Quit();
-        Logger::LogWarning(std::string("IMG quited"));
+        Logger::LogWarning("IMG quited"s);
         SDL_Quit();
-        Logger::LogWarning(std::string("SDL quited"));
-        Logger::LogWarning(std::string("Memory cleared"));
+        Logger::LogWarning("SDL quited"s);
+        Logger::LogWarning("Memory cleared"s);
         Logger::Destroy();
         return;
     }
-    Logger::LogSucsess(std::string("Renderer initialized"));
+    Logger::LogSucsess("Renderer initialized"s);
     
     // Initialize scene loader
     m_SceneLoader = new SceneLoader(m_Window, m_Renderer);
-    Logger::LogSucsess(std::string("Scene loader initialized"));
+    Logger::LogSucsess("Scene loader initialized"s);
     
     // Start game loop and load start scene
     m_isRunning = true;
     m_initFlag = true;
     m_SceneLoader->SetStartScene();
-    Logger::LogSucsess(std::string("Application class created\n"));
+    Logger::LogSucsess("Application class created\n"s);
 }
 
 void Application::destroy(void) {
-    Logger::LogProcess(std::string("Deleting application class"));
+    Logger::LogProcess("Deleting application class"s);
     if (m_initFlag) {
         // Delete scene loader
         delete m_SceneLoader;
-        Logger::LogSucsess(std::string("Scene loader deleted"));
+        Logger::LogSucsess("Scene loader deleted"s);
         // Destroy renderer
         SDL_DestroyRenderer(m_Renderer);
-        Logger::LogSucsess(std::string("Renderer deleted"));
+        Logger::LogSucsess("Renderer deleted"s);
         // Delete and destroy window
         SDL_DestroyWindow(m_Window->window);
         delete m_Window;
-        Logger::LogSucsess(std::string("Window deleted"));
+        Logger::LogSucsess("Window deleted"s);
         // Mix quit
         Mix_Quit();
-        Logger::LogSucsess(std::string("MIX quited"));
+        Logger::LogSucsess("MIX quited"s);
         // Ttf quit
         TTF_Quit();
-        Logger::LogSucsess(std::string("TTF quited"));
+        Logger::LogSucsess("TTF quited"s);
         // Img quit
         IMG_Quit();
-        Logger::LogSucsess(std::string("IMG quited"));
+        Logger::LogSucsess("IMG quited"s);
         // Sdl quit
         SDL_Quit();
-        Logger::LogSucsess(std::string("SDL quited"));
-        Logger::LogSucsess(std::string("Application class deleted"));
+        Logger::LogSucsess("SDL quited"s);
+        Logger::LogSucsess("Application class deleted"s);
         // Destroy logger
         Logger::Destroy();
     }
