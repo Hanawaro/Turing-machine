@@ -26,6 +26,9 @@ private:
     int m_BG_width = 0;
     int m_BG_height = 0;
     
+    int x = 0;
+    int y = 0;
+    
     // Controller
     Button m_Start;
     Button m_Stop;

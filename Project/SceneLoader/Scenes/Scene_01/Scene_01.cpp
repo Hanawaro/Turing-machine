@@ -40,8 +40,10 @@ void Scene_01::Clear(void) {
 
 void Scene_01::HandleEvent(SDL_Event *l_Event) {
     // Take absolut coordinates
-    int x = l_Event->motion.x/Status::resizeHorizontal;
-    int y = l_Event->motion.y/Status::resizeVertical;
+    if (l_Event->type == SDL_MOUSEMOTION) {
+        x = l_Event->motion.x/Status::resizeHorizontal;
+        y = l_Event->motion.y/Status::resizeVertical;
+    }
     
     // Handle touch event
     core.touch(x, y);
@@ -51,16 +53,6 @@ void Scene_01::HandleEvent(SDL_Event *l_Event) {
     
     // Handle main events
     switch (l_Event->type) {
-        case SDL_WINDOWEVENT:
-            // Resize event
-            switch (l_Event->window.event) {
-                case SDL_WINDOWEVENT_RESIZED:
-                    Status::resizeHorizontal = l_Event->window.data1/WIN_WIDTH;
-                    Status::resizeVertical = l_Event->window.data2/WIN_HEIGHT;
-                    m_Background->SetSize(m_BG_width*Status::resizeHorizontal, m_BG_height*Status::resizeVertical);
-                break;
-            }
-            break;
         // Touch without up-move
         case SDL_MOUSEBUTTONDOWN:
             if (l_Event->button.button == SDL_BUTTON_LEFT)
@@ -70,6 +62,16 @@ void Scene_01::HandleEvent(SDL_Event *l_Event) {
         case SDL_MOUSEBUTTONUP:
             if (l_Event->button.button == SDL_BUTTON_LEFT) {
                 core.downTouch(x, y);
+            }
+            break;
+        case SDL_WINDOWEVENT:
+            // Resize event
+            switch (l_Event->window.event) {
+                case SDL_WINDOWEVENT_RESIZED:
+                    Status::resizeHorizontal = l_Event->window.data1/WIN_WIDTH;
+                    Status::resizeVertical = l_Event->window.data2/WIN_HEIGHT;
+                    m_Background->SetSize(m_BG_width*Status::resizeHorizontal, m_BG_height*Status::resizeVertical);
+                break;
             }
             break;
     }
