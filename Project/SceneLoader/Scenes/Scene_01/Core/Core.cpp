@@ -218,12 +218,8 @@ void Core::downTouch(int x, int y) {
     if (x >= m_TableController.x + 70 && x <= (m_TableController.x + (Status::algorithm.size() + 1) * m_TableController.width) &&
         y >= m_TableController.y + 20 && y <= (m_TableController.y + (Status::alphabet.size() + 1) * m_TableController.height)) {
         
-        if (Status::status != Status::DeepStatus::Cells) {
-            disable();
-        } else {
-            m_InputBar.disable();
-            m_TableController.touch(x, y);
-        }
+        disable();
+        m_TableController.touch(x, y);
         m_TableController.set();
         return;
     }

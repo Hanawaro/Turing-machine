@@ -183,7 +183,9 @@ void TableController::clear(void) {
 
 void TableController::set(void) {
     if (Status::status != Status::DeepStatus::Pause && Status::status != Status::DeepStatus::Process) {
-        disable();
+        checkOld();
+        if (m_ActiveCell.activeI == -1 || m_ActiveCell.activeJ == -1)
+            return;
         Status::status = Status::DeepStatus::Cells;
         m_LocaleMain = m_LocaleSecondary = Locale::Enable;
         m_DrawCell.activeI = m_ActiveCell.activeI;
